@@ -1,6 +1,5 @@
 - 👋 Hi, I’m @TawanaState
 - 👀 I’m interested in developing desktop Applications.
-- 🌱 I’m currently learning VB.net & c++
 - 💞️ I’m looking to collaborate on ...
 - 📫 How to reach me: WhatsApp me on +263779936807
 
