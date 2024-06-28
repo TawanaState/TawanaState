@@ -6,8 +6,9 @@ Hello there! I'm Tawananyasha Mukoriwo, a youthful and passionate software devel
 I specialize in creating robust, intelligent, and easy-to-use applications. My tech stack includes Python, JavaScript, and .NET technologies. My work is not just about coding; it's about making a difference by developing solutions that protect and empower users.
 
 ## Skills
-- **Python**: Django, Backend Development
+- **Python**: Django, Backend Development, TensorFlow & ML
 - **JavaScript**: TF.js, ReactJS, Node.js, ElectronJS
+- **Golang**: Gin, PostgreSQL
 - **.NET**: C#, VB, WinForms, UWP, Xamarin
 
 ## Testimonials
