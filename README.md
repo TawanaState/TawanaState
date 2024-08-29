@@ -23,7 +23,7 @@ Learn | Dream | Build | Share
 
 ---
 
-[Visit my website](https://TawanaState.github.io/) for more information!
+[Visit my website](https://tawananyasha.com/) for more information!
 <!---
 TawanaState/TawanaState is a ✨ special ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 You can click the Preview link to take a look at your changes.
