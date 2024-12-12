@@ -15,7 +15,7 @@ I specialize in creating robust, intelligent, and easy-to-use applications. My t
 I've had the privilege of working with amazing people who appreciate my dedication and resourcefulness. Their kind words inspire me to keep pushing the boundaries of what I can achieve.
 
 ## Let's Connect!
-I'm always excited to collaborate, learn, and help others on their tech journey. Feel free to reach out to me via email at hello@tawananyasha.com or call me at +263 78 573 3582.
+I'm always excited to collaborate, learn, and help others on their tech journey. Feel free to reach out to me via email at hello@tawananyasha.com or call me at [+263 78 573 3582](tel:+263785733582).
 
 ---
 
