@@ -7,9 +7,9 @@ I specialize in creating robust, intelligent, and easy-to-use applications. My t
 
 ## Skills
 - **Python**: Django, Backend Development, TensorFlow & ML
-- **JavaScript**: TF.js, ReactJS, Node.js, ElectronJS
+- **JavaScript**: TF.js, ReactJS, Node.js, ElectronJS, Typescript
 - **Golang**: Gin, PostgreSQL
-- **.NET**: C#, VB, WinForms, UWP, Xamarin
+- **.NET**: C#, WinForms, UWP
 
 ## Testimonials
 I've had the privilege of working with amazing people who appreciate my dedication and resourcefulness. Their kind words inspire me to keep pushing the boundaries of what I can achieve.
