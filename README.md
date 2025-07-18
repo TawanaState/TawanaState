@@ -35,9 +35,9 @@ I believe technology has the power to solve real-world problems and create a bet
 ### **📈 GitHub Stats 📈**
 
 <p align="center">  
-<img src="https://github-readme-stats.vercel.app/api?username=TawanaState\&show\_icons=true\&theme=radical\&hide\_border=true\&count\_private=true" alt="Tawana's GitHub Stats" />  
-<img src="https://github-readme-streak-stats.herokuapp.com/?user=TawanaState\&theme=radical\&hide\_border=true" alt="Tawana's GitHub Streak" />  
-<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=TawanaState\&layout=compact\&theme=radical\&hide\_border=true" alt="Top Languages" />  
+<img src="https://github-readme-stats.vercel.app/api?username=TawanaState&show_icons=true&theme=radical&hide_border=true&count_private=true" alt="Tawana's GitHub Stats" />  
+<img src="https://github-readme-streak-stats.herokuapp.com/?user=TawanaState&theme=radical&hide_border=true" alt="Tawana's GitHub Streak" />  
+<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=TawanaState&layout=compact&theme=radical&hide_border=true" alt="Top Languages" />  
 </p>
 
 ### **🤝 Let's Connect & Build Something Amazing\! 🤝**
@@ -45,7 +45,5 @@ I believe technology has the power to solve real-world problems and create a bet
 I'm always open to new ideas, collaborations, and discussions about the latest tech trends. Feel free to reach out\!
 
 * **Portfolio:** [https://tawananyasha.com](https://tawananyasha.com) 🌐  
-* **LinkedIn:** \[Your LinkedIn Profile URL Here\] (Replace with your actual LinkedIn URL\!) 🔗  
-* **Email:** \[Your Email Address Here\] (Replace with your actual email address\!) 📧
 
 Thanks for stopping by\! Let's innovate together\! ✨
