@@ -34,11 +34,11 @@ I believe technology has the power to solve real-world problems and create a bet
 
 ### **📈 GitHub Stats 📈**
 
-\<p align="center"\>  
-\<img src="https://github-readme-stats.vercel.app/api?username=TawanaState\&show\_icons=true\&theme=radical\&hide\_border=true\&count\_private=true" alt="Tawana's GitHub Stats" /\>  
-\<img src="https://github-readme-streak-stats.herokuapp.com/?user=TawanaState\&theme=radical\&hide\_border=true" alt="Tawana's GitHub Streak" /\>  
-\<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=TawanaState\&layout=compact\&theme=radical\&hide\_border=true" alt="Top Languages" /\>  
-\</p\>
+<p align="center">  
+<img src="https://github-readme-stats.vercel.app/api?username=TawanaState\&show\_icons=true\&theme=radical\&hide\_border=true\&count\_private=true" alt="Tawana's GitHub Stats" />  
+<img src="https://github-readme-streak-stats.herokuapp.com/?user=TawanaState\&theme=radical\&hide\_border=true" alt="Tawana's GitHub Streak" />  
+<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=TawanaState\&layout=compact\&theme=radical\&hide\_border=true" alt="Top Languages" />  
+</p>
 
 ### **🤝 Let's Connect & Build Something Amazing\! 🤝**
 
