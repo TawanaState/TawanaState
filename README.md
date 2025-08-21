@@ -1,49 +1,35 @@
-# **🔥 Hey there, I'm Tawana\! 🔥**
+# Hey there, I'm Tawananyasha Mukoriwo 👋
 
-### **🚀 Igniting Ideas & Building the Future, One Line of Code at a Time\! 🚀**
+**Software Engineer • ML & Hardware Enthusiast • Innovator**
 
-👋 What's up, everyone\! I'm Tawana, a **young and incredibly passionate developer** with an insatiable curiosity for all things tech\! I live and breathe innovation, constantly diving deep into the exciting realms of **Machine Learning 🧠**, **Internet of Things (IoT) 🌐**, and cutting-edge **Web Technologies 💻**.
+I'm based in Harare, Zimbabwe, and I’m all about turning big ideas into reality by blending code, machine learning, and hardware.
 
-My journey is all about transforming complex ideas into elegant, impactful solutions. I thrive on challenges and love pushing the boundaries of what's possible, always learning and adapting at lightning speed\!
+---
 
-### **✨ My Tech Playground ✨**
+## ​ What I Do
 
-Here's a glimpse into the tools and technologies that fuel my projects:
+- **Software Engineering & Web Development** – I build robust, user-centered apps using **Next.js**, **Deno**, **Python**, **Django**, **Go**, **TypeScript**, and modern frameworks like **Tailwind CSS**.  
+- **Machine Learning & AI** – I design and train models with **TensorFlow**, **PyTorch**, **JAX**, **ONNX**, **NumPy**, and **Pandas**, delivering smart, actionable insights.  
+- **Hardware & Embedded Systems** – I enjoy working hands-on with **Arduino**, **Raspberry Pi**, **ESP32**, embedded systems, and robotics to bring software into the real world.  
+- **DevOps & Cloud Tools** – Skilled in **Docker**, **AWS**, and CI/CD workflows, I streamline deployment and infrastructure with precision.  
+- **UI/UX & Desktop Apps** – Whether it’s desktop assistants with **Tauri** or polished interfaces, I craft experiences that feel intuitive and smooth.
 
-Languages:  
-Python 🐍 | JavaScript/TypeScript 🚀 | HTML5 Markup 📄 | CSS3 Styling 🎨 | Java ☕ | C++ ⚙️  
-Machine Learning & Data Science:  
-TensorFlow ✨ | Keras 🧠 | PyTorch 🔥 | Scikit-learn 📊 | Pandas 🐼 | NumPy 🔢 | Matplotlib 📈  
-Internet of Things (IoT):  
-Arduino 🤖 | Raspberry Pi 🥧 | ESP32/ESP8266 📡 | MQTT ✉️ | Sensor Integration 💡 | Edge Computing ⚡  
-Web Development:  
-React.js ⚛️ | Node.js 🟢 | Express.js 💨 | Next.js ➡️ | Tailwind CSS 🌬️ | MongoDB 🍃 | PostgreSQL 🐘 | RESTful APIs 🔗  
-Cloud & DevOps:  
-AWS ☁️ | Docker 🐳 | Git & GitHub 🐙 | CI/CD Concepts ⚙️
+---
 
-### **💡 What I'm Currently Fired Up About 💡**
+##  Why I Build
 
-* **Exploring advanced ML models:** Diving into Generative AI and Reinforcement Learning\!  
-* **Building smarter IoT ecosystems:** Connecting devices to create seamless, intelligent environments.  
-* **Crafting blazing-fast web experiences:** Optimizing performance and user engagement with modern frameworks.  
-* **Contributing to open source:** Giving back to the community that inspires me\!
+Every project starts with a spark—an idea or a puzzle. I’m driven by bridging digital and physical realms: crafting intelligent, real-world solutions through code and hardware. Whether it’s IoT, AI, or user-first web apps, I'm here to make tech feel empowering and accessible. 
 
-### **🌟 My Vision 🌟**
+---
 
-I believe technology has the power to solve real-world problems and create a better future. My goal is to leverage my skills to build impactful applications that make a difference, whether it's through intelligent automation, seamless connectivity, or intuitive user interfaces.
+##  Let's Connect
 
-### **📈 GitHub Stats 📈**
+I'm always up for conversations about new tech trends, collaboration ideas, or a friendly chat about code, hardware, or design. Let’s make something awesome together!
 
-<p align="center">  
-<img src="https://github-readme-stats.vercel.app/api?username=TawanaState&show_icons=true&theme=radical&hide_border=true&count_private=true" alt="Tawana's GitHub Stats" />  
-<img src="https://github-readme-streak-stats.herokuapp.com/?user=TawanaState&theme=radical&hide_border=true" alt="Tawana's GitHub Streak" />  
-<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=TawanaState&layout=compact&theme=radical&hide_border=true" alt="Top Languages" />  
-</p>
+- **Portfolio**: [tawananyasha.com](https://tawananyasha.com)
+- **Email**: info@tawananyasha.com  
+- **Based in**: Harare, Zimbabwe  
 
-### **🤝 Let's Connect & Build Something Amazing\! 🤝**
+---
 
-I'm always open to new ideas, collaborations, and discussions about the latest tech trends. Feel free to reach out\!
-
-* **Portfolio:** [https://tawananyasha.com](https://tawananyasha.com) 🌐  
-
-Thanks for stopping by\! Let's innovate together\! ✨
+*Thanks for stopping by—let’s innovate and build cool things!*
