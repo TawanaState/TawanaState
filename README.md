@@ -1,4 +1,4 @@
-# Hi there, I'm Tawananyasha Mukoriwo 👋
+# Hi, I'm Tawananyasha Mukoriwo
 
 **Software Engineer • ML & Hardware Enthusiast • Innovator**
 
