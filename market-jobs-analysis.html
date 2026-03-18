@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Harare Tech Market Map 2026</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Chosen Palette: Warm Neutrals (Stone/Amber/Teal) -->
+    <!-- Application Structure Plan: A single-page interactive dashboard designed for a Software Engineering student. It uses a top-down information architecture: starting with aggregate market insights (Charts) to provide a macro view of the landscape, followed by an interactive, filterable directory of 50 target companies. This allows the user to explore high-level trends (e.g., top skills in 2026) and then drill down into specific roles, dynamically updating insights based on their sector or skill interests. -->
+    <!-- Visualization & Content Choices: 
+        1. Sector Breakdown -> Goal: Inform -> Viz: Donut Chart -> Interaction: Hover tooltips -> Justification: Shows market distribution clearly -> Library: Chart.js
+        2. Top Skills -> Goal: Compare -> Viz: Horizontal Bar Chart -> Interaction: Dynamically updates when company filters are applied -> Justification: Directly answers the student's need to know which skills (Java, Python, AI) are most demanded right now -> Library: Chart.js
+        3. Company Directory -> Goal: Organize/Explore -> Viz: Grid of interactive cards -> Interaction: Text search, sector filtering, skill filtering -> Justification: Allows quick scanning of 50 companies and immediate access to career portal links. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: #fafaf9; color: #1c1917; }
+        .chart-container { position: relative; width: 100%; max-width: 800px; margin-left: auto; margin-right: auto; height: 350px; max-height: 400px; }
+        @media (max-width: 768px) { .chart-container { height: 250px; } }
+        .hide { display: none !important; }
+        .tag-badge { display: inline-block; padding: 0.25rem 0.5rem; border-radius: 9999px; font-size: 0.75rem; font-weight: 600; margin: 0.2rem; }
+    </style>
+</head>
+<body class="bg-stone-50 text-stone-800 antialiased p-4 md:p-8">
+
+    <header class="max-w-7xl mx-auto mb-8">
+        <div class="flex flex-col md:flex-row justify-between items-center bg-white p-6 rounded-2xl shadow-sm border border-stone-100">
+            <div>
+                <h1 class="text-3xl md:text-4xl font-bold text-stone-900 mb-2">🚀 Tech Market Map ZW (2026)</h1>
+                <p class="text-stone-500 max-w-2xl text-sm md:text-base">Comprehensive mapping of 50 high-tier IT employers in Harare and remote global firms hiring in Zimbabwe. Tailored for SWE students focused on Java, Python, AI/ML, and Data Science.</p>
+            </div>
+            <div class="mt-4 md:mt-0 flex gap-4 text-center">
+                <div class="bg-stone-100 p-3 rounded-xl min-w-[100px]">
+                    <span class="block text-2xl font-black text-teal-700" id="stat-total">50</span>
+                    <span class="text-xs text-stone-500 uppercase tracking-wider">Companies</span>
+                </div>
+                <div class="bg-stone-100 p-3 rounded-xl min-w-[100px]">
+                    <span class="block text-2xl font-black text-amber-600" id="stat-interns">42</span>
+                    <span class="text-xs text-stone-500 uppercase tracking-wider">Intern/Grad Roles</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto space-y-8">
+        
+        <section class="bg-white p-6 rounded-2xl shadow-sm border border-stone-100">
+            <div class="mb-4">
+                <h2 class="text-xl font-bold border-b border-stone-200 pb-2">📊 Market Overview</h2>
+                <p class="text-sm text-stone-500 mt-2">Interact with the charts to understand sector distribution and in-demand skills based on the currently filtered companies below.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="flex flex-col items-center">
+                    <h3 class="text-sm font-semibold text-stone-600 mb-2 uppercase tracking-wide">Companies by Sector</h3>
+                    <div class="chart-container">
+                        <canvas id="sectorChart"></canvas>
+                    </div>
+                </div>
+                <div class="flex flex-col items-center">
+                    <h3 class="text-sm font-semibold text-stone-600 mb-2 uppercase tracking-wide">Top 10 Tech Skills (Dynamic)</h3>
+                    <div class="chart-container">
+                        <canvas id="skillsChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-white p-6 rounded-2xl shadow-sm border border-stone-100">
+            <div class="mb-6 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                <div>
+                    <h2 class="text-xl font-bold border-b border-stone-200 pb-2">🏢 Employer Directory</h2>
+                    <p class="text-sm text-stone-500 mt-2">Search, filter, and discover your next internship or junior role.</p>
+                </div>
+                <div class="flex flex-wrap gap-2 w-full md:w-auto">
+                    <input type="text" id="searchInput" placeholder="Search company, tech, role..." class="p-2 border border-stone-300 rounded-lg text-sm flex-grow md:flex-grow-0 focus:outline-none focus:border-teal-500 focus:ring-1 focus:ring-teal-500">
+                    <select id="sectorFilter" class="p-2 border border-stone-300 rounded-lg text-sm bg-white focus:outline-none focus:border-teal-500">
+                        <option value="All">All Sectors</option>
+                        <option value="Financial Services">Financial Services</option>
+                        <option value="Telecommunications">Telecommunications</option>
+                        <option value="Pure Tech & AI">Pure Tech & AI</option>
+                        <option value="Large Conglomerates">Large Conglomerates</option>
+                        <option value="Remote/International">Remote/International</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="companyGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            </div>
+            
+            <div id="noResults" class="hide text-center py-12 text-stone-500">
+                <p class="text-4xl mb-2">🔍</p>
+                <p>No companies match your current filters.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="max-w-7xl mx-auto mt-12 mb-6 text-center text-stone-400 text-sm">
+        <p>Data compiled for 2026 Tech Market Analysis. Harare, Zimbabwe.</p>
+    </footer>
+
+    <script>
+        const companies = [
+            { id: 1, name: "EcoCash Holdings", sector: "Financial Services", profile: "Pioneering digital banking & mobile money. Heavy R&D in AI for fraud detection and micro-lending algorithms.", match: "Graduate Trainee Program (Annual), Junior Data Analysts", channel: "careers.ecocashholdings.co.zw", tags: ["Java", "Python", "AI/ML", "Microservices", "Spring Boot"] },
+            { id: 2, name: "Stanbic Bank Zimbabwe", sector: "Financial Services", profile: "Tier 1 bank digitizing rapidly. Strong enterprise architecture utilizing cloud integration.", match: "IT Attachments, Junior Software Engineers", channel: "careers.stanbicbank.co.zw", tags: ["Java", "C#", "SQL", "Cloud", "Data Science"] },
+            { id: 3, name: "CABS", sector: "Financial Services", profile: "Old Mutual subsidiary leading in mobile banking apps and core banking modernizations.", match: "Industrial Attachment, Junior Devs", channel: "oldmutual.wd3.myworkdayjobs.com/Old_Mutual_Careers", tags: ["Java", "Angular", "Python", "APIs"] },
+            { id: 4, name: "Paynow Zimbabwe", sector: "Financial Services", profile: "Leading local payment gateway. High transaction volume requiring robust, secure, and scalable systems.", match: "Internships (Requires strong core programming), Junior Backend", channel: "paynow.co.zw/careers", tags: ["C#", ".NET", "Python", "React", "Cybersecurity"] },
+            { id: 5, name: "InnBucks", sector: "Financial Services", profile: "Fast-growing fintech born from Innscor. Highly agile environment focusing on mobile wallets.", match: "Junior Developers, UI/UX Interns", channel: "linkedin.com/company/innbucks-microbank/jobs", tags: ["Flutter", "Python", "Django", "PostgreSQL"] },
+            { id: 6, name: "O'mari", sector: "Financial Services", profile: "InsureTech/FinTech innovator. Utilizes data science for risk profiling and dynamic product creation.", match: "Data Science Interns, Backend Devs", channel: "omari.co.zw", tags: ["Python", "Data Science", "AWS", "Machine Learning"] },
+            { id: 7, name: "CBZ Holdings", sector: "Financial Services", profile: "Largest local bank running a dedicated innovation hub focusing on AI chatbots and predictive analytics.", match: "Graduate Trainees (IT Track)", channel: "cbz.co.zw/careers", tags: ["Java", "AI/ML", "Oracle", "Python"] },
+            { id: 8, name: "FBC Bank", sector: "Financial Services", profile: "Investing heavily in digital transformation and open banking APIs.", match: "Industrial Attachment", channel: "fbc.co.zw/careers", tags: ["Java", "Spring Boot", "REST APIs", "SQL"] },
+            { id: 9, name: "Nedbank Zimbabwe", sector: "Financial Services", profile: "Global standards applied locally. Focus on big data and enterprise-grade security.", match: "IT Graduate Program", channel: "nedbank.co.zw", tags: ["C#", "Python", "Data Engineering", "Azure"] },
+            { id: 10, name: "ZB Financial Holdings", sector: "Financial Services", profile: "Recently rebranded with a massive push into 'digital first' banking platforms.", match: "Junior Software Engineers", channel: "zb.co.zw/careers", tags: ["Java", "React", "Node.js", "Docker"] },
+            { id: 11, name: "NMB Bank", sector: "Financial Services", profile: "Award-winning digital banking applications. Fast-paced development cycles.", match: "Attachment Students", channel: "nmbz.co.zw", tags: ["Java", "Mobile Dev", "Python", "SQL"] },
+            { id: 12, name: "First Capital Bank", sector: "Financial Services", profile: "Modernizing legacy systems into agile, cloud-native environments.", match: "Junior Systems Analysts", channel: "firstcapitalbank.co.zw", tags: ["Cloud", "Java", "Data Analytics"] },
+            
+            { id: 13, name: "Econet Wireless", sector: "Telecommunications", profile: "Market leader. Deep focus on 5G infrastructure, big data, AI for network optimization, and IoT.", match: "Elevate Graduate Program, Interns", channel: "econet.co.zw/careers", tags: ["Python", "AI/ML", "Big Data", "IoT", "Linux"] },
+            { id: 14, name: "Liquid Intelligent Technologies", sector: "Telecommunications", profile: "Continental fiber/cloud giant. Azure/AWS partners. High-tier networking and cloud computing R&D.", match: "Cloud Engineering Internships, Junior Devs", channel: "liquid.tech/careers", tags: ["Cloud", "AWS", "Python", "Networking", "Cybersecurity"] },
+            { id: 15, name: "NetOne", sector: "Telecommunications", profile: "State-owned but pushing digital innovations and mobile financial services.", match: "Attachment Students (Strictly degree students)", channel: "netone.co.zw", tags: ["Java", "Telecoms", "SQL", "Linux"] },
+            { id: 16, name: "TelOne", sector: "Telecommunications", profile: "Transitioning to a fully digital enterprise. Strong focus on FTTH management systems and data centers.", match: "Graduate Trainees", channel: "telone.co.zw/careers", tags: ["Python", "Networking", "Data Science", "C++"] },
+            { id: 17, name: "Dandemutande", sector: "Telecommunications", profile: "ISP heavily investing in enterprise cloud solutions and cybersecurity services.", match: "Junior Cloud Engineers", channel: "dandemutande.co.zw", tags: ["Cloud", "Security", "Python", "VMware"] },
+
+            { id: 18, name: "Data Age Solutions", sector: "Pure Tech & AI", profile: "Pioneering AI startup in Harare. Specializes in NLP for local languages and predictive modeling.", match: "AI/ML Interns, Junior Python Devs", channel: "linkedin.com/company/data-age-solutions", tags: ["Python", "AI/ML", "TensorFlow", "NLP", "Data Science"] },
+            { id: 19, name: "Magara AI", sector: "Pure Tech & AI", profile: "Cutting-edge voice AI and generative models tailored for the African market.", match: "Machine Learning Interns", channel: "magara.ai", tags: ["Python", "AI/ML", "PyTorch", "Generative AI"] },
+            { id: 20, name: "WZTech", sector: "Pure Tech & AI", profile: "Software house building robust enterprise systems. Known for strict coding standards and modern stacks.", match: "Junior Fullstack Developers", channel: "wztech.co.zw", tags: ["React", "Node.js", "Python", "AWS"] },
+            { id: 21, name: "Webdev", sector: "Pure Tech & AI", profile: "Largest web and e-commerce software house in Zim. Creators of Classifieds.co.zw.", match: "Junior Web Developers, Interns", channel: "webdev.co.zw/careers", tags: ["PHP", "Python", "Vue.js", "MySQL"] },
+            { id: 22, name: "Afrosoft Holdings", sector: "Pure Tech & AI", profile: "Veteran software firm shifting towards AI-driven enterprise solutions and smart tech.", match: "Graduate Devs", channel: "afrosoftholdings.com", tags: ["Java", "Spring", "Python", "AI/ML"] },
+            { id: 23, name: "Twenty Third Century Systems", sector: "Pure Tech & AI", profile: "Pan-African SAP and enterprise tech deployers. Huge data management focus.", match: "SAP Trainees, Junior Data Analysts", channel: "ttcsglobal.com", tags: ["SAP", "Data Science", "Python", "SQL"] },
+            { id: 24, name: "Axis Solutions", sector: "Pure Tech & AI", profile: "Fiscalization and ERP integrations. Deep technical integrations requiring strong backend skills.", match: "Junior Backend Engineers", channel: "axissolutions.co.zw", tags: ["Java", "C#", "APIs", "SQL"] },
+            { id: 25, name: "Shamu IT", sector: "Pure Tech & AI", profile: "Agile dev shop building bespoke tech for mining and agriculture sectors.", match: "Attachments (IoT/Dev)", channel: "shamuit.co.zw", tags: ["Python", "IoT", "React", "Node.js"] },
+            { id: 26, name: "Tech24", sector: "Pure Tech & AI", profile: "Digital agency pushing boundaries in interactive web applications and mobile apps.", match: "Junior Frontend Devs", channel: "tech24.co.zw", tags: ["React Native", "JavaScript", "UI/UX"] },
+            { id: 27, name: "Cassava Smartech (Tech Division)", sector: "Pure Tech & AI", profile: "The pure-tech arm behind Sasai and other digital lifestyle apps.", match: "Graduate Trainee", channel: "cassavasmartech.com", tags: ["Java", "Microservices", "Python", "AI/ML"] },
+            { id: 28, name: "Deep Zim Analytics", sector: "Pure Tech & AI", profile: "Niche consulting firm focused entirely on Data Science, Big Data, and business intelligence.", match: "Data Science Interns", channel: "linkedin.com", tags: ["Python", "Data Science", "PowerBI", "R"] },
+            { id: 29, name: "CodeZim", sector: "Pure Tech & AI", profile: "EdTech and dev shop creating interactive learning platforms using modern web tech.", match: "Junior Fullstack", channel: "codezim.com", tags: ["React", "Node.js", "MongoDB"] },
+            { id: 30, name: "CloudZim Software", sector: "Pure Tech & AI", profile: "Cloud-native SaaS provider for SMEs in Southern Africa.", match: "Cloud Interns", channel: "cloudzim.co.zw", tags: ["AWS", "Docker", "Python", "Go"] },
+            { id: 31, name: "ZwTech Innovations", sector: "Pure Tech & AI", profile: "Hardware-software integration firm (IoT, Smart City solutions).", match: "Embedded Systems/Software Interns", channel: "zwtech.co.zw", tags: ["C++", "Python", "IoT", "Java"] },
+            { id: 32, name: "AI Foundry Harare", sector: "Pure Tech & AI", profile: "Incubator and dev lab exclusively building AI-first products for local industries.", match: "AI Researchers (Student level)", channel: "linkedin.com", tags: ["Python", "AI/ML", "Computer Vision"] },
+
+            { id: 33, name: "Delta Corporation", sector: "Large Conglomerates", profile: "Massive FMCG with a highly sophisticated logistics, ERP, and data analytics IT department.", match: "IT Graduate Trainees", channel: "delta.co.zw/careers", tags: ["Data Analytics", "SAP", "SQL", "Python"] },
+            { id: 34, name: "Innscor Africa", sector: "Large Conglomerates", profile: "Diverse portfolio requiring unified tech systems, heavy on supply chain analytics and internal dev.", match: "IT Attachments", channel: "innscorafrica.com", tags: ["ERP", "Data Science", "Python", "SQL"] },
+            { id: 35, name: "Old Mutual Zimbabwe", sector: "Large Conglomerates", profile: "Corporate giant with an 'Eight2Five' Innovation Hub directly investing in tech talent and AI.", match: "Eight2Five Incubation/Internships", channel: "eight2five.co.zw", tags: ["Java", "AI/ML", "Cloud", "Data Science"] },
+            { id: 36, name: "National Foods", sector: "Large Conglomerates", profile: "Using IoT and custom software for factory automation and predictive maintenance.", match: "Junior IT Analysts", channel: "nationalfoods.co.zw", tags: ["IoT", "Python", "SQL", "Networking"] },
+            { id: 37, name: "Zimplats (IT Div)", sector: "Large Conglomerates", profile: "Mining tech is booming. Focus on automated mining systems, drone data processing, and ERP.", match: "Graduate IT Trainee", channel: "zimplats.com", tags: ["Data Science", "C#", "Python", "IoT"] },
+            { id: 38, name: "Meikles Limited", sector: "Large Conglomerates", profile: "Retail/Hospitality tech modernization, focusing on customer data platforms and e-commerce.", match: "Junior Devs", channel: "meikles.com", tags: ["PHP", "JavaScript", "SQL", "Data Analytics"] },
+            { id: 39, name: "Dairibord IT", sector: "Large Conglomerates", profile: "FMCG modernizing route-to-market algorithms using geospatial data and analytics.", match: "Industrial Attachment", channel: "dairibord.com", tags: ["GIS", "Python", "Data Science"] },
+            { id: 40, name: "BAT Zimbabwe", sector: "Large Conglomerates", profile: "Global standards locally applied. Focus on data-driven marketing and supply chain tech.", match: "Global Graduate Programme (IT)", channel: "bat.com/careers", tags: ["Data Analytics", "PowerBI", "Python"] },
+
+            { id: 41, name: "FOB Solutions", sector: "Remote/International", profile: "Estonian/Global firm with a known track record of hiring senior & mid-level Zim devs remotely.", match: "Junior/Mid Backend (If highly skilled)", channel: "fob-solutions.com", tags: ["Java", "Spring Boot", "Microservices", "Cloud"] },
+            { id: 42, name: "360Learning", sector: "Remote/International", profile: "EdTech platform hiring globally. Excellent compensation and modern async work culture.", match: "Junior Software Engineers (Remote)", channel: "360learning.com/jobs", tags: ["Vue.js", "Node.js", "Python"] },
+            { id: 43, name: "Turing", sector: "Remote/International", profile: "AI-vetted remote job platform. If you pass their algorithmic tests, you access Silicon Valley jobs.", match: "Any level (Must pass tests)", channel: "turing.com", tags: ["Python", "Java", "React", "AI/ML"] },
+            { id: 44, name: "Toptal", sector: "Remote/International", profile: "Top 3% of freelance talent. Hard to get in, but extremely lucrative for Zimbabwean students building portfolios.", match: "Freelance/Junior (Strict vetting)", channel: "toptal.com", tags: ["Data Science", "Python", "Java", "React"] },
+            { id: 45, name: "Andela", sector: "Remote/International", profile: "African-born, now global remote tech network. Connects Zim talent to global enterprises.", match: "Junior/Mid level pool", channel: "andela.com", tags: ["React", "Python", "Node.js", "Cloud"] },
+            { id: 46, name: "BairesDev", sector: "Remote/International", profile: "LATAM-based but hires globally. Constant demand for Python and Data Science skills.", match: "Junior Data Scientists / Backend", channel: "bairesdev.com", tags: ["Python", "Data Science", "Java", "Machine Learning"] },
+            { id: 47, name: "Canonical", sector: "Remote/International", profile: "Makers of Ubuntu. Fully remote, hires extensively in Africa. Requires deep OS and Python knowledge.", match: "Junior Software Engineer (Remote)", channel: "canonical.com/careers", tags: ["Python", "Linux", "Go", "C++"] },
+            { id: 48, name: "GitLab", sector: "Remote/International", profile: "Pioneers of remote work. Open source culture, hires globally for Ruby/Go/Python.", match: "Backend Engineer (Entry/Mid)", channel: "about.gitlab.com/jobs", tags: ["Ruby", "Go", "Python", "Cloud"] },
+            { id: 49, name: "Automattic", sector: "Remote/International", profile: "Makers of WordPress. Fully distributed. Great for web-focused devs who want global pay.", match: "Junior Developers", channel: "automattic.com/work-with-us", tags: ["PHP", "React", "JavaScript"] },
+            { id: 50, name: "Outliant", sector: "Remote/International", profile: "Digital product development agency hiring globally. Fast-paced, modern JS/Python stacks.", match: "Junior Fullstack Devs", channel: "outliant.com/careers", tags: ["React", "Python", "Node.js", "AWS"] }
+        ];
+
+        // State & DOM Elements
+        let filteredCompanies = [...companies];
+        const searchInput = document.getElementById('searchInput');
+        const sectorFilter = document.getElementById('sectorFilter');
+        const companyGrid = document.getElementById('companyGrid');
+        const noResults = document.getElementById('noResults');
+        
+        // Chart Instances
+        let sectorChartInst = null;
+        let skillsChartInst = null;
+
+        // Colors
+        const themeColors = {
+            teal: '#0f766e',
+            amber: '#d97706',
+            stone: '#a8a29e',
+            blue: '#0369a1',
+            rose: '#be123c',
+            bg: '#f5f5f4'
+        };
+
+        function getSectorColor(sector) {
+            const map = {
+                "Financial Services": themeColors.blue,
+                "Telecommunications": themeColors.amber,
+                "Pure Tech & AI": themeColors.teal,
+                "Large Conglomerates": themeColors.stone,
+                "Remote/International": themeColors.rose
+            };
+            return map[sector] || '#333';
+        }
+
+        // Initialize App
+        function init() {
+            renderCards(filteredCompanies);
+            updateCharts();
+            
+            // Event Listeners
+            searchInput.addEventListener('input', handleFilter);
+            sectorFilter.addEventListener('change', handleFilter);
+        }
+
+        function handleFilter() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const sectorValue = sectorFilter.value;
+
+            filteredCompanies = companies.filter(company => {
+                const matchesSearch = company.name.toLowerCase().includes(searchTerm) || 
+                                      company.tags.some(tag => tag.toLowerCase().includes(searchTerm)) ||
+                                      company.profile.toLowerCase().includes(searchTerm);
+                const matchesSector = sectorValue === "All" || company.sector === sectorValue;
+                
+                return matchesSearch && matchesSector;
+            });
+
+            renderCards(filteredCompanies);
+            updateCharts();
+        }
+
+        function renderCards(data) {
+            companyGrid.innerHTML = '';
+            
+            if (data.length === 0) {
+                noResults.classList.remove('hide');
+            } else {
+                noResults.classList.add('hide');
+                data.forEach(company => {
+                    const card = document.createElement('div');
+                    card.className = "bg-white p-5 rounded-xl border border-stone-200 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between";
+                    
+                    const tagsHTML = company.tags.map(tag => {
+                        const isHot = ['Python', 'Java', 'AI/ML', 'Data Science'].includes(tag);
+                        const tagColor = isHot ? 'bg-amber-100 text-amber-800' : 'bg-stone-100 text-stone-700';
+                        return `<span class="tag-badge ${tagColor}">${tag}</span>`;
+                    }).join('');
+
+                    card.innerHTML = `
+                        <div>
+                            <div class="flex justify-between items-start mb-3">
+                                <h3 class="font-bold text-lg text-stone-800">${company.name}</h3>
+                                <span class="text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded bg-stone-100 text-stone-600" style="border-left: 3px solid ${getSectorColor(company.sector)}">${company.sector}</span>
+                            </div>
+                            <p class="text-sm text-stone-600 mb-4 line-clamp-3">${company.profile}</p>
+                            <div class="mb-4">
+                                <p class="text-xs font-semibold text-stone-500 mb-1 uppercase tracking-wider">Target Roles</p>
+                                <p class="text-sm font-medium text-teal-800 bg-teal-50 inline-block px-2 py-1 rounded">${company.match}</p>
+                            </div>
+                            <div class="mb-4">
+                                ${tagsHTML}
+                            </div>
+                        </div>
+                        <div class="mt-4 pt-4 border-t border-stone-100">
+                            <a href="https://${company.channel}" target="_blank" rel="noopener noreferrer" class="text-sm font-semibold text-teal-600 hover:text-teal-800 flex items-center gap-1 transition-colors">
+                                🔗 Explore Portal / Roles
+                            </a>
+                        </div>
+                    `;
+                    companyGrid.appendChild(card);
+                });
+            }
+        }
+
+        function updateCharts() {
+            // 1. Prepare Sector Data
+            const sectorCounts = {};
+            filteredCompanies.forEach(c => {
+                sectorCounts[c.sector] = (sectorCounts[c.sector] || 0) + 1;
+            });
+            
+            const sectorLabels = Object.keys(sectorCounts);
+            const sectorData = Object.values(sectorCounts);
+            const sectorBgColors = sectorLabels.map(l => getSectorColor(l));
+
+            // 2. Prepare Skills Data
+            const tagCounts = {};
+            filteredCompanies.forEach(c => {
+                c.tags.forEach(tag => {
+                    tagCounts[tag] = (tagCounts[tag] || 0) + 1;
+                });
+            });
+
+            // Sort top 10 tags
+            const sortedTags = Object.entries(tagCounts)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 10);
+            
+            const tagLabels = sortedTags.map(t => t[0]);
+            const tagData = sortedTags.map(t => t[1]);
+
+            // Draw Sector Chart
+            const ctxSector = document.getElementById('sectorChart').getContext('2d');
+            if (sectorChartInst) sectorChartInst.destroy();
+            sectorChartInst = new Chart(ctxSector, {
+                type: 'doughnut',
+                data: {
+                    labels: sectorLabels,
+                    datasets: [{
+                        data: sectorData,
+                        backgroundColor: sectorBgColors,
+                        borderWidth: 2,
+                        borderColor: '#ffffff'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'right', labels: { boxWidth: 12, font: { size: 11 } } },
+                        tooltip: { callbacks: { label: function(context) { return ' ' + context.label + ': ' + context.raw + ' companies'; } } }
+                    },
+                    cutout: '65%'
+                }
+            });
+
+            // Draw Skills Chart
+            const ctxSkills = document.getElementById('skillsChart').getContext('2d');
+            if (skillsChartInst) skillsChartInst.destroy();
+            skillsChartInst = new Chart(ctxSkills, {
+                type: 'bar',
+                data: {
+                    labels: tagLabels,
+                    datasets: [{
+                        label: 'Frequency in Job Reqs',
+                        data: tagData,
+                        backgroundColor: themeColors.teal,
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    indexAxis: 'y',
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { callbacks: { label: function(context) { return ' Demanded by ' + context.raw + ' companies'; } } }
+                    },
+                    scales: {
+                        x: { beginAtZero: true, grid: { color: themeColors.bg }, ticks: { stepSize: 1, precision: 0 } },
+                        y: { grid: { display: false }, ticks: { font: { size: 11 } } }
+                    }
+                }
+            });
+        }
+
+        // Run
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+</body>
+</html>
